@@ -21,9 +21,7 @@ $ <b>rake db:migrate</b>
    -> 0.0038s
 == 20180327054904 CreateComments: migrated (0.0039s) ==========================
 
-$ <b>touch app/views/comments/_comment.html.erb</b>
-
-$ <b>touch app/views/comments/_form.html.erb</b>
+$ <b>touch app/views/comments/_comment.html.erb touch app/views/comments/_form.html.erb</b>
 </pre></code>
 
 `app/models/comment.rb`:

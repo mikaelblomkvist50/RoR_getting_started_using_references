@@ -33,48 +33,39 @@ buying_bitcoin_comment_two = Comment.create(commenter: 'random', body: 'https://
 ```
 
 <pre><code>
-$ <b>rails console</b>
-2.4.1 :001 > Article.destroy_all
-.
-.
-2.4.1 :002 > Comment.destroy_all
-.
-.
-2.4.1 :003 > exit
-
 $ <b>rails db:seed</b>
 
 $ <b>rails console</b>
-Running via Spring preloader in process 50931
-Loading development environment (Rails 5.1.4)
+Running via Spring preloader in process 57261
+Loading development environment (Rails 5.1.6)
 2.4.1 :001 > Hirb.enable
  => true
 2.4.1 :002 > Article.all
-  Article Load (2.3ms)  SELECT "articles".* FROM "articles"
-+----+-------------------------------+-------------------------------+-------------------------+-------------------------+
-| id | title                         | text                          | created_at              | updated_at              |
-+----+-------------------------------+-------------------------------+-------------------------+-------------------------+
-| 5  | Best place to start learni... | Are these resources anygoo... | 2018-03-28 03:39:45 UTC | 2018-03-28 03:39:45 UTC |
-| 6  | Where to buy Bitcoin in Au... | Apart from local BitCoins,... | 2018-03-28 03:39:45 UTC | 2018-03-28 03:39:45 UTC |
-+----+-------------------------------+-------------------------------+-------------------------+-------------------------+
+  Article Load (1.6ms)  SELECT "articles".* FROM "articles"
++----+-------------------------------------+-------------------------------------------------+-------------------------+-------------------------+
+| id | title                               | text                                            | created_at              | updated_at              |
++----+-------------------------------------+-------------------------------------------------+-------------------------+-------------------------+
+| 1  | Best place to start learning Rails? | Are these resources anygood? http://guides.r... | 2018-05-17 02:06:45 UTC | 2018-05-17 02:06:45 UTC |
+| 2  | Where to buy Bitcoin in Australia?  | Apart from local BitCoins, where else could ... | 2018-05-17 02:06:45 UTC | 2018-05-17 02:06:45 UTC |
++----+-------------------------------------+-------------------------------------------------+-------------------------+-------------------------+
 2 rows in set
 2.4.1 :003 > Comment.all
-  Comment Load (0.3ms)  SELECT "comments".* FROM "comments"
-+----+-----------+--------------------------------------+------------+-------------------------+-------------------------+
-| id | commenter | body                                 | article_id | created_at              | updated_at              |
-+----+-----------+--------------------------------------+------------+-------------------------+-------------------------+
-| 7  | John      | Yes those are both informative an... | 5          | 2018-03-28 03:39:45 UTC | 2018-03-28 03:39:45 UTC |
-| 8  | Mike      | I also recommend https://pragprog... | 5          | 2018-03-28 03:39:45 UTC | 2018-03-28 03:39:45 UTC |
-| 9  | Satoshi   | Checkout https://www.coinjar.com.au/ | 6          | 2018-03-28 03:39:45 UTC | 2018-03-28 03:39:45 UTC |
-| 10 | random    | https://www.coinspot.com.au/         | 6          | 2018-03-28 03:39:45 UTC | 2018-03-28 03:39:45 UTC |
-+----+-----------+--------------------------------------+------------+-------------------------+-------------------------+
+  Comment Load (0.4ms)  SELECT "comments".* FROM "comments"
++----+-----------+--------------------------------------------------------------+------------+-------------------------+-------------------------+
+| id | commenter | body                                                         | article_id | created_at              | updated_at              |
++----+-----------+--------------------------------------------------------------+------------+-------------------------+-------------------------+
+| 1  | John      | Yes those are both informative and begginer friendly.        | 1          | 2018-05-17 02:06:45 UTC | 2018-05-17 02:06:45 UTC |
+| 2  | Mike      | I also recommend https://pragprog.com/book/rails51/agile-... | 1          | 2018-05-17 02:06:45 UTC | 2018-05-17 02:06:45 UTC |
+| 3  | Satoshi   | Checkout https://www.coinjar.com.au/                         | 2          | 2018-05-17 02:06:45 UTC | 2018-05-17 02:06:45 UTC |
+| 4  | random    | https://www.coinspot.com.au/                                 | 2          | 2018-05-17 02:06:45 UTC | 2018-05-17 02:06:45 UTC |
++----+-----------+--------------------------------------------------------------+------------+-------------------------+-------------------------+
 4 rows in set
 2.4.1 :004 >
 </pre></code>
 
- `db/schema.rb`:
- ```ruby
- # This file is auto-generated from the current state of the database. Instead
+`db/schema.rb`:
+```ruby
+# This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
@@ -86,7 +77,7 @@ Loading development environment (Rails 5.1.4)
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180327054904) do
+ActiveRecord::Schema.define(version: 20180517020331) do
 
   create_table "articles", force: :cascade do |t|
     t.string "title"
@@ -105,4 +96,18 @@ ActiveRecord::Schema.define(version: 20180327054904) do
   end
 
 end
+```
+
+### Without Hirb Vanilla Rails Console
+```
+$ rails console
+Running via Spring preloader in process 57388
+Loading development environment (Rails 5.1.6)
+2.4.1 :001 > Article.all
+  Article Load (2.5ms)  SELECT  "articles".* FROM "articles" LIMIT ?  [["LIMIT", 11]]
+ => #<ActiveRecord::Relation [#<Article id: 1, title: "Best place to start learning Rails?", text: "Are these resources anygood? http://guides.rubyonr...", created_at: "2018-05-17 02:06:45", updated_at: "2018-05-17 02:06:45">, #<Article id: 2, title: "Where to buy Bitcoin in Australia?", text: "Apart from local BitCoins, where else could I purc...", created_at: "2018-05-17 02:06:45", updated_at: "2018-05-17 02:06:45">]>
+2.4.1 :002 > Comment.all
+  Comment Load (0.3ms)  SELECT  "comments".* FROM "comments" LIMIT ?  [["LIMIT", 11]]
+ => #<ActiveRecord::Relation [#<Comment id: 1, commenter: "John", body: "Yes those are both informative and begginer friend...", article_id: 1, created_at: "2018-05-17 02:06:45", updated_at: "2018-05-17 02:06:45">, #<Comment id: 2, commenter: "Mike", body: "I also recommend https://pragprog.com/book/rails51...", article_id: 1, created_at: "2018-05-17 02:06:45", updated_at: "2018-05-17 02:06:45">, #<Comment id: 3, commenter: "Satoshi", body: "Checkout https://www.coinjar.com.au/", article_id: 2, created_at: "2018-05-17 02:06:45", updated_at: "2018-05-17 02:06:45">, #<Comment id: 4, commenter: "random", body: "https://www.coinspot.com.au/", article_id: 2, created_at: "2018-05-17 02:06:45", updated_at: "2018-05-17 02:06:45">]>
+2.4.1 :003 >
 ```
