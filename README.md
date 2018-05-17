@@ -1,3 +1,5 @@
+https://github.com/mikaelblomkvist50/resources-ruby-on-rails/blob/master/ruby-on-rails-guides/getting-started-with-rails-using-references/getting-started-with-rails-using-references.md
+
 # README
 
 This README would normally document whatever steps are necessary to get the
